@@ -248,6 +248,9 @@ int Z80Emulate (Z80_STATE *state, int number_cycles, void *context)
  * needed by Z80Interrupt() for interrupt mode 0.
  */
 
+int trace;
+char * listing_instructions[0xffff];
+
 static int emulate (Z80_STATE * state, 
 	int opcode, 
 	int elapsed_cycles, int number_cycles, 
@@ -256,10 +259,29 @@ static int emulate (Z80_STATE * state,
         int	pc, r;
 
         pc = state->pc;
+
         r = state->r & 0x7f;
         goto start_emulation;
 
         for ( ; ; ) {   
+
+                if ( trace ){
+                        printf( "[%4.4x] %2.2x %s\n", pc, ((ZEXTEST *)context)->memory[pc], listing_instructions[pc] ? listing_instructions[pc] : "(null)" );
+                        printf( "      A: %2.2x B: %2.2x C: %2.2x D: %2.2x E: %2.2x H: %2.2x L: %2.2x S: %c%c%c%c%c%c%c%c\n\n", 
+                                state->registers.byte[Z80_A], state->registers.byte[Z80_B], 
+                                state->registers.byte[Z80_C], state->registers.byte[Z80_D], 
+                                state->registers.byte[Z80_E], state->registers.byte[Z80_H], 
+                                state->registers.byte[Z80_L],
+                                state->registers.byte[Z80_F] & 0x80 ? 'S' : '-',
+                                state->registers.byte[Z80_F] & 0x40 ? 'Z' : '-',
+                                state->registers.byte[Z80_F] & 0x20 ? '?' : '-',
+                                state->registers.byte[Z80_F] & 0x10 ? 'H' : '-',
+                                state->registers.byte[Z80_F] & 0x08 ? '?' : '-',
+                                state->registers.byte[Z80_F] & 0x04 ? 'O' : '-',
+                                state->registers.byte[Z80_F] & 0x02 ? 'A' : '-',
+                                state->registers.byte[Z80_F] & 0x01 ? 'C' : '-'
+                                 );
+                }
 
                 void    **registers; 
                 int     instruction;

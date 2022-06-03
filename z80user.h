@@ -90,9 +90,10 @@ extern "C" {
  */
 
 #include "zextest.h"
+#include <stdio.h>
 
 #define Z80_READ_BYTE(address, x)                                       \
-{                                                                       \
+{       \
         (x) = ((ZEXTEST *) context)->memory[(address) & 0xffff];	\
 }
 
@@ -134,7 +135,7 @@ extern "C" {
 
 #define Z80_OUTPUT_BYTE(port, x)                                        \
 {                                                                       \
-        ((ZEXTEST *) context)->is_done = !0; 				\
+        /* ((ZEXTEST *) context)->is_done = !0;*/       		\
         number_cycles = 0;                                              \
 }
 
