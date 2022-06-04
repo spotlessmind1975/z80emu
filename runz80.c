@@ -176,6 +176,7 @@ static int doInspections(int argc, char **argv, RUNZ80 *context)	/* -L file */
 
 extern int trace;
 extern char * listing_instructions[];
+extern char * listing_lines[];
 
 static int doListing(int argc, char **argv, RUNZ80 *context)	/* -i file */
 {
@@ -183,6 +184,8 @@ static int doListing(int argc, char **argv, RUNZ80 *context)	/* -i file */
   if (argc < 2) usage(1);
   char * filename = argv[1];
   FILE * handle = fopen( filename, "rt");
+
+  int lastLine = 0;
 
   while(!feof(handle) ) {
 	(void)!fgets( line, 256, handle );
@@ -209,7 +212,15 @@ static int doListing(int argc, char **argv, RUNZ80 *context)	/* -i file */
 	memcpy(instructions, sp, (sp2 - sp)-1 );
 	if ( strcmp(instructions, "" ) == 0 ) continue;
 
+        sp = strstr( instructions, "; L");
+
+        if ( sp != NULL ) {
+                sp += 4;
+                lastLine = atoi( sp );
+        }
+
     listing_instructions[context->org_address+pc] = strdup( instructions );
+    listing_lines[context->org_address+pc] = lastLine;
 //     printf( "%4.4x %s\n", context->org_address+pc, listing_instructions[context->org_address+pc] );
 
   }
@@ -274,7 +285,7 @@ RUNZ80	context;
                 FILE * profile_heatmap_file = fopen(context.profile_filename, "wt+");
                 for( int i=0; i<(1<<16); ++i) {
                         if ( listing_instructions[i] ) {
-                                fprintf( profile_heatmap_file, "%4.4x %4.4x %s\n", context.profile_heatmap[i], i, listing_instructions[i]  );
+                                fprintf( profile_heatmap_file, "%4.4x %4.4x %4.4 %s\n", context.profile_heatmap[i], i, listing_lines[i], listing_instructions[i]  );
                         }
                 }
                 fclose( profile_heatmap_file );
