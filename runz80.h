@@ -30,7 +30,8 @@ typedef struct RUNZ80 {
 	char		* 	profile_filename;
 	int				profile_cycles;
 	int				profile_heatmap[1 << 16];
-
+	int				profile_heatmap_max;
+	
 } RUNZ80;
 
 extern void     SystemCall (RUNZ80 *runz80);

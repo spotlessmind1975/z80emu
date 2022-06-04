@@ -80,6 +80,7 @@ static int doProfiling(int argc, char **argv, RUNZ80 *context)	/* -l addr file *
         context->profile_filename = strdup( filename );
         context->profile_cycles = cycles;
         memset( context->profile_heatmap, 0, sizeof(int) * (1<<16) );
+        context->profile_heatmap_max = 0;
         return 2;
 }
 
@@ -266,6 +267,10 @@ RUNZ80	context;
                         printf("%4.4x\n", context.state.pc);
                         ++context.profile_heatmap[context.state.pc];
 
+                        if ( context.profile_heatmap_max < context.profile_heatmap[context.state.pc] ) {
+                                context.profile_heatmap_max = context.profile_heatmap[context.state.pc];
+                        }
+
                         if ( ! context.profile_cycles ) {
                                 context.is_done = 1;
                         } else {
@@ -283,6 +288,7 @@ RUNZ80	context;
 
         if ( context.profile_filename != NULL ) {
                 FILE * profile_heatmap_file = fopen(context.profile_filename, "wt+");
+                fprintf( profile_heatmap_file, "%4.4x %4.4x %4.4 PROFILING\n", context.profile_heatmap_max, 0, 0  );
                 for( int i=0; i<(1<<16); ++i) {
                         if ( listing_instructions[i] ) {
                                 fprintf( profile_heatmap_file, "%4.4x %4.4x %4.4 %s\n", context.profile_heatmap[i], i, listing_lines[i], listing_instructions[i]  );
