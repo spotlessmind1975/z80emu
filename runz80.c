@@ -251,12 +251,6 @@ RUNZ80	context;
 
 	do {
 
-                Z80Emulate(&context.state, 1, &context);
-
-                if ( context.state.pc == context.stop_address ) {
-                        context.is_done = 1;
-                }
-
                 if ( context.profile_filename != NULL ) {
                         printf("%4.4x\n", context.state.pc);
                         ++context.profile_heatmap[context.state.pc];
@@ -266,6 +260,12 @@ RUNZ80	context;
                         } else {
                                 --context.profile_cycles;
                         }
+                }
+
+                Z80Emulate(&context.state, 1, &context);
+
+                if ( context.state.pc == context.stop_address ) {
+                        context.is_done = 1;
                 }
 
         } while (!context.is_done&&context.state.status!=Z80_STATUS_FLAG_HALT);
