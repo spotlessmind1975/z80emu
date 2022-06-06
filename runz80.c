@@ -177,7 +177,7 @@ static int doInspections(int argc, char **argv, RUNZ80 *context)	/* -L file */
 
 extern int trace;
 extern char * listing_instructions[];
-extern char * listing_lines[];
+extern int listing_lines[];
 
 static int doListing(int argc, char **argv, RUNZ80 *context)	/* -i file */
 {

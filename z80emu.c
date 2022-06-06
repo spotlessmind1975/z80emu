@@ -250,7 +250,7 @@ int Z80Emulate (Z80_STATE *state, int number_cycles, void *context)
 
 int trace;
 char * listing_instructions[0xffff];
-char * listing_lines[0xffff];
+int listing_lines[0xffff];
 
 static int emulate (Z80_STATE * state, 
 	int opcode, 
