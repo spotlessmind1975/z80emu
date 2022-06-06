@@ -213,7 +213,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context)	/* -i file */
 	memcpy(instructions, sp, (sp2 - sp)-1 );
 	if ( strcmp(instructions, "" ) == 0 ) continue;
 
-        sp = strstr( instructions, "; L");
+        sp = strstr( line, "; L");
 
         if ( sp != NULL ) {
                 sp += 4;
