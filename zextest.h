@@ -11,14 +11,15 @@
 
 #include "z80emu.h"
 
-typedef struct ZEXTEST {
+typedef struct ZEXTEST
+{
 
-	Z80_STATE	state;
-	unsigned char	memory[1 << 16];
-	int 		is_done;
+	Z80_STATE state;
+	unsigned char memory[1 << 16];
+	int is_done;
 
 } ZEXTEST;
 
-extern void     SystemCall (ZEXTEST *zextest);
+extern void SystemCall(ZEXTEST *zextest);
 
 #endif
