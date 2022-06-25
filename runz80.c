@@ -264,7 +264,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
 static int doColeco(int argc, char **argv, RUNZ80 *context) /* -l addr file */
 {
         *(context->memory + 0x1f7f) = 0xc9;
-        return 1;
+        return 0;
 }
 
 int main(int argc, char **argv)
