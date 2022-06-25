@@ -200,7 +200,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
         FILE *handle = fopen(filename, "rt");
 
         int lastLine = 0;
-        char * currentSegment = NULL;
+        char *currentSegment = NULL;
 
         while (!feof(handle))
         {
@@ -221,7 +221,8 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
 
                 sp = strstr(sp2, "SECTION");
 
-                if ( sp ) {
+                if (sp)
+                {
                         sp += 8;
                         currentSegment = strdup(sp);
                 }
@@ -248,7 +249,8 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                         lastLine = atoi(sp);
                 }
 
-                if ( !currentSegment || strcmp( currentSegment, "code_user" ) == 0 ) {
+                if (!currentSegment || strcmp(currentSegment, "code_user") == 0)
+                {
                         listing_instructions[context->org_address + pc] = strdup(instructions);
                         listing_lines[context->org_address + pc] = lastLine;
                         //     printf( "%4.4x %s\n", context->org_address+pc, listing_instructions[context->org_address+pc] );
