@@ -318,7 +318,6 @@ int main(int argc, char **argv)
 
                 if (context.profile_filename != NULL)
                 {
-                        printf("%4.4x\n", context.state.pc);
                         ++context.profile_heatmap[context.state.pc];
 
                         if (context.profile_heatmap_max < context.profile_heatmap[context.state.pc])
