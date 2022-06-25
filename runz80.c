@@ -200,6 +200,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
         FILE *handle = fopen(filename, "rt");
 
         int lastLine = 0;
+        char * currentSegment = NULL;
 
         while (!feof(handle))
         {
@@ -217,6 +218,13 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                 memcpy(address, sp, (sp2 - sp));
 
                 int pc = htol(address);
+
+                sp = strstr(sp2, "SECTION");
+
+                if ( sp ) {
+                        sp += 8;
+                        currentSegment = strdup(sp);
+                }
 
                 sp = strchr(sp2 + 1, 0x9);
                 if (!sp)
@@ -240,9 +248,11 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                         lastLine = atoi(sp);
                 }
 
-                listing_instructions[context->org_address + pc] = strdup(instructions);
-                listing_lines[context->org_address + pc] = lastLine;
-                //     printf( "%4.4x %s\n", context->org_address+pc, listing_instructions[context->org_address+pc] );
+                if ( !currentSegment || strcmp( currentSegment, "code_user" ) == 0 ) {
+                        listing_instructions[context->org_address + pc] = strdup(instructions);
+                        listing_lines[context->org_address + pc] = lastLine;
+                        //     printf( "%4.4x %s\n", context->org_address+pc, listing_instructions[context->org_address+pc] );
+                }
         }
         fclose(handle);
         return 1;
