@@ -276,7 +276,8 @@ static int emulate(Z80_STATE *state,
 
                 if (trace)
                 {
-                        printf("[%4.4x] %2.2x %s\n", (state->pc), ((ZEXTEST *)context)->memory[(state->pc)], listing_instructions[(state->pc)] ? listing_instructions[(state->pc)] : "(null)");
+                        int pc2 = state->pc-1;
+                        printf("[%4.4x] %2.2x %s\n", (pc2), ((ZEXTEST *)context)->memory[(pc2)], listing_instructions[(pc2)] ? listing_instructions[(pc2)] : "(null)");
                         printf("      A: %2.2x B: %2.2x C: %2.2x D: %2.2x E: %2.2x H: %2.2x L: %2.2x S: %c%c%c%c%c%c%c%c\n\n",
                                state->registers.byte[Z80_A], state->registers.byte[Z80_B],
                                state->registers.byte[Z80_C], state->registers.byte[Z80_D],
