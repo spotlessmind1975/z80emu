@@ -233,6 +233,9 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                 int pc = htol(address);
 
                 sp = strstr(sp2, "section");
+                if ( !sp ) {
+                        sp = strstr(sp2, "SECTION");
+                }
 
                 if (sp)
                 {
