@@ -232,14 +232,14 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
 
                 int pc = htol(address);
 
-                sp = strstr(sp2, "section");
+                sp = strstr(sp2, "   section");
                 if ( !sp ) {
-                        sp = strstr(sp2, "SECTION");
+                        sp = strstr(sp2, "   SECTION");
                 }
 
                 if (sp)
                 {
-                        sp += 8;
+                        sp += 11;
                         currentSegment = strdup(sp);
                         currentSegment[strlen(currentSegment)-1] = 0;
                         continue;
