@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <time.h>
 #include "runz80.h"
 #include "z80emu.h"
@@ -218,6 +219,12 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                 memset(address, 0, 16);
                 memcpy(address, sp, (sp2 - sp));
 
+                for( int i=0; i<strlen(address); ++i ) {
+                   if ( !isxdigit(address[i]) ) {
+                        continue;
+                   }
+                }
+                
                 int pc = htol(address);
 
                 sp = strstr(sp2, "section");
