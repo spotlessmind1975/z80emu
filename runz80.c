@@ -229,7 +229,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                 if ( i<4 ) {
                         continue;
                 }                
-                
+
                 int pc = htol(address);
 
                 sp = strstr(sp2, "section");
@@ -242,7 +242,11 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                         continue;
                 }
 
-                sp = sp2 + 10;
+                if ( strchr( sp2, 0x9 ) ) {
+                        sp = strchr( sp2, 0x9 ) + 1;
+                } else {
+                        sp = sp2 + 10;
+                }
 
                 sp2 = strchr(sp + 1, 0);
                 if (!sp2)
