@@ -271,6 +271,7 @@ static int doColeco(int argc, char **argv, RUNZ80 *context) /* -l addr file */
 static int doMsx1(int argc, char **argv, RUNZ80 *context) /* -l addr file */
 {
         *(context->memory + 0x0138) = 0xc9;
+        *(context->memory + 0x0024) = 0xc9;
         return 0;
 }
 
