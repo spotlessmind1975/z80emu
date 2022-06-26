@@ -227,6 +227,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                         sp += 8;
                         currentSegment = strdup(sp);
                         currentSegment[strlen(currentSegment)-1] = 0;
+                        continue;
                 }
 
                 sp = sp2 + 10;
