@@ -40,6 +40,7 @@ static void usage(int status)
         fprintf(stream, "  -p file cycles    -- enable profiling\n");
         fprintf(stream, "  -c                -- emulate COLECO ROM entry point\n");
         fprintf(stream, "  -m                -- emulate MSX1 ROM entry point\n");
+        fprintf(stream, "  -3                -- emulate SG3000 VDP sync\n");
         fprintf(stream, "\n");
         exit(status);
 }
@@ -461,6 +462,9 @@ int main(int argc, char **argv)
 
 void SystemCall(RUNZ80 *zextest)
 {
+
+        zextest->state.registers.byte[Z80_A] = 0x80;
+
         if (zextest->state.registers.byte[Z80_C] == 2)
 
                 printf("%c", zextest->state.registers.byte[Z80_E]);
