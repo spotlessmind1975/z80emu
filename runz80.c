@@ -229,9 +229,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                         currentSegment[strlen(currentSegment)-1] = 0;
                 }
 
-                sp = strchr(sp2 + 1, 0x9);
-                if (!sp)
-                        continue;
+                sp = sp2 + 10;
 
                 sp2 = strchr(sp + 1, 0);
                 if (!sp2)
