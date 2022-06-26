@@ -250,7 +250,7 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                         lastLine = atoi(sp);
                 }
 
-                if (strcmp(currentSegment, "code_user") == 0)
+                if (!currentSegment || strcmp(currentSegment, "code_user") == 0)
                 {
                         listing_instructions[context->org_address + pc] = strdup(instructions);
                         listing_lines[context->org_address + pc] = lastLine;
