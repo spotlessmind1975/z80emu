@@ -219,11 +219,16 @@ static int doListing(int argc, char **argv, RUNZ80 *context) /* -i file */
                 memset(address, 0, 16);
                 memcpy(address, sp, (sp2 - sp));
 
-                for( int i=0; i<strlen(address); ++i ) {
+                int i = 0;
+                for( i=0; i<4; ++i ) {
                    if ( !isxdigit(address[i]) ) {
-                        continue;
+                        break;
                    }
                 }
+                
+                if ( i<4 ) {
+                        continue;
+                }                
                 
                 int pc = htol(address);
 
