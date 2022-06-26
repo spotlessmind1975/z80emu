@@ -38,6 +38,7 @@ static void usage(int status)
         fprintf(stream, "  -X addr           -- terminate emulation if PC reaches addr\n");
         fprintf(stream, "  -p file cycles    -- enable profiling\n");
         fprintf(stream, "  -c                -- emulate COLECO ROM entry point\n");
+        fprintf(stream, "  -m                -- emulate MSX1 ROM entry point\n");
         fprintf(stream, "\n");
         exit(status);
 }
@@ -267,6 +268,12 @@ static int doColeco(int argc, char **argv, RUNZ80 *context) /* -l addr file */
         return 0;
 }
 
+static int doMsx1(int argc, char **argv, RUNZ80 *context) /* -l addr file */
+{
+        *(context->memory + 0x0138) = 0xc9;
+        return 0;
+}
+
 int main(int argc, char **argv)
 {
 
@@ -292,6 +299,8 @@ int main(int argc, char **argv)
                         n = doXtrap(argc, argv, &context);
                 else if (!strcmp(*argv, "-c"))
                         n = doColeco(argc, argv, &context);
+                else if (!strcmp(*argv, "-m"))
+                        n = doMsx1(argc, argv, &context);
                 else if (!strcmp(*argv, "-u"))
                         n = doListing(argc, argv, &context);
                 else if (!strcmp(*argv, "-p"))
