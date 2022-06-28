@@ -460,10 +460,14 @@ int main(int argc, char **argv)
  * (output $-terminated string to screen).
  */
 
+int vdp = 0;
+
 void SystemCall(RUNZ80 *zextest)
 {
 
-        zextest->state.registers.byte[Z80_A] = 0x80;
+        vdp = vdp ^ 0x80;
+
+        zextest->state.registers.byte[Z80_A] = vdp;
 
         if (zextest->state.registers.byte[Z80_C] == 2)
 
